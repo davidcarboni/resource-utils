@@ -1,0 +1,9 @@
+phooey! (Content is not allowed in prolog.)
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- From: http://www.w3schools.com/xml/note.xml -->
+<note>
+	<to>Tove</to>
+	<from>Jani</from>
+	<heading>Reminder</heading>
+	<body>Don't forget me this weekend!</body>
+</note>
