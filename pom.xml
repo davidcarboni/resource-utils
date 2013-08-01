@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.jirasystems</groupId>
 	<artifactId>resource-util</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Resource Utils</name>
 	<description>Convenience for dealing with Java resources as properties, files, text and input streams.</description>
@@ -23,7 +23,7 @@
 		<url>https://github.com/davidcarboni/resource-utils</url>
 		<connection>scm:git:git://github.com/davidcarboni/resource-utils.git</connection>
 		<developerConnection>scm:git:git@github.com:davidcarboni/resource-utils.git</developerConnection>
-		<tag>resource-util-1.0.6</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
