@@ -3,41 +3,46 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.jirasystems</groupId>
 	<artifactId>resource-util</artifactId>
-	<version>1.0.5</version>
-	<name>Resource Util</name>
-	<description>Convenience utility functions for dealing with Java resources such as properties, files, text and input streams.</description>
+	<version>1.0.6-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Resource Utils</name>
+	<description>Convenience for dealing with Java resources as properties, files, text and input streams.</description>
+	<url>https://github.com/davidcarboni/resource-utils</url>
+
+	<!-- Required: license information: -->
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+
+	<!-- Required: source control information: -->
+	<scm>
+		<url>https://github.com/davidcarboni/resource-utils</url>
+		<connection>scm:git:git://github.com/davidcarboni/resource-utils.git</connection>
+		<developerConnection>scm:git:git@github.com:davidcarboni/resource-utils.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus</id>
-			<url>http://192.168.4.2:8081/nexus/content/groups/public/</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<name>Nexus Releases</name>
-			<url>http://192.168.4.2:8081/nexus/content/repositories/releases</url>
-		</repository>
 		<snapshotRepository>
-			<id>nexus</id>
-			<name>Nexus Snapshots</name>
-			<url>http://192.168.4.2:8081/nexus/content/repositories/snapshots</url>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus snapshot repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
-	</distributionManagement>
-
-	<repositories>
 		<repository>
-			<id>nexus</id>
-			<name>WorkDocx Artifact repository</name>
-			<url>http://192.168.4.2:8081/nexus/content/groups/public</url>
+			<id>sonatype-nexus-staging</id>
+			<name>Sonatype Nexus release repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
-	</repositories>
+	</distributionManagement>
 
 	<dependencies>
 
@@ -58,13 +63,25 @@
 
 	<build>
 
+		<!-- Include the README, NOTICE and LICENSE files: -->
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>README*</include>
+					<include>NOTICE*</include>
+					<include>LICENSE*</include>
+				</includes>
+			</resource>
+		</resources>
+
 		<plugins>
 
-			<!-- This configures the build to use JVM 1.6 compliance: -->
+			<!-- JVM 1.6 compliance and UTF-8 encoding: -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -72,28 +89,26 @@
 				</configuration>
 			</plugin>
 
-			<!-- This configures the manifest: -->
+			<!-- Optional: ensure the manifest contains artifact version information: -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
+				<version>2.4</version>
 				<configuration>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
-						<manifestEntries>
-							<Implementation-Version>${project.version}</Implementation-Version>
-						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
 
-			<!-- Source JAR -->
+			<!-- Required: source JAR -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
+				<version>2.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -105,11 +120,11 @@
 				</executions>
 			</plugin>
 
-			<!-- Javadoc JAR -->
+			<!-- Required: javadoc JAR -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.8</version>
+				<version>2.9.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadoc</id>
@@ -121,7 +136,77 @@
 				</executions>
 			</plugin>
 
+			<!-- Release configuration: -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+
+					<!-- Automated passphrase entry: -->
+
+					<!-- To pass your passphrase to the build automatically, so avoiding 
+						manual interaction, you'll need to put the passphrase into settings.xml. 
+						You don't really want that to be in plain text, so you'll want to follow: 
+						http://maven.apache.org/guides/mini/guide-encryption.html -->
+					<!-- <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments> -->
+
+					<!-- Manual passphrase entry: -->
+
+					<!-- This is the simplest secure solution, but requires you to type 
+						your key passphrase in manually when performing a release. No biggie unless 
+						you want your CI server to decide when to release for you. -->
+					<mavenExecutorId>forked-path</mavenExecutorId>
+
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
+
+	<profiles>
+
+		<!-- GPG Signature on release -->
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+	<!-- Required: developer information: -->
+	<developers>
+		<developer>
+			<id>david</id>
+			<name>David Carboni</name>
+			<email>david@carboni.co</email>
+			<organization>Carboni</organization>
+			<organizationUrl>https://github.com/davidcarboni</organizationUrl>
+			<url>https://github.com/davidcarboni</url>
+		</developer>
+	</developers>
+
 </project>
