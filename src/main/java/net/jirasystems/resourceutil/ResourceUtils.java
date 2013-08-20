@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
  * @author David Carboni
  * 
  */
-public class ResourceUtil {
+public class ResourceUtils {
 
 	/**
 	 * 
@@ -33,7 +33,7 @@ public class ResourceUtil {
 	public static InputStream getStream(String name) throws IOException {
 
 		// Try a couple of strategies to get the resource:
-		InputStream stream = ResourceUtil.class.getResourceAsStream(name);
+		InputStream stream = ResourceUtils.class.getResourceAsStream(name);
 		if (stream == null) {
 			throw new IOException("Unable to locate resource " + name);
 		}

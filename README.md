@@ -9,23 +9,23 @@ Resource Utils provides straightforward access to Java resources in several form
 
 To get a resource as `Properties`:
 
-    Properties properties = ResourceUtil.getProperties("/com/github/davidcarboni/app.properties");
+    Properties properties = ResourceUtils.getProperties("/com/github/davidcarboni/app.properties");
 
 To get a resource as an XML `Document`:
 
-    Document document = ResourceUtil.getXml("/com/github/davidcarboni/app.xml");
+    Document document = ResourceUtils.getXml("/com/github/davidcarboni/app.xml");
 
 To get a resource as a `String`:
 
-    String string = ResourceUtil.getString("/com/github/davidcarboni/string.resource");
+    String string = ResourceUtils.getString("/com/github/davidcarboni/string.resource");
 
 To extract a resource to a temp `File`:
 
-    File temp = ResourceUtil.getFile("/com/github/davidcarboni/file.resource");
+    File temp = ResourceUtils.getFile("/com/github/davidcarboni/file.resource");
 
 To get a resource as a good old `InputStream`:
 
-    InputStream input = ResourceUtil.getStream("/com/github/davidcarboni/resource.data");
+    InputStream input = ResourceUtils.getStream("/com/github/davidcarboni/resource.data");
 
 
 ### Maven usage

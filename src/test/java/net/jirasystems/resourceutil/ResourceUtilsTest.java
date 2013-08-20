@@ -17,7 +17,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class ResourceUtilTest {
+public class ResourceUtilsTest {
 
 	@Test
 	public void testGetStream() throws IOException {
@@ -26,7 +26,7 @@ public class ResourceUtilTest {
 		String name = "/stream.txt";
 
 		// When
-		InputStream stream = ResourceUtil.getStream(name);
+		InputStream stream = ResourceUtils.getStream(name);
 		stream.close();
 
 		// Then
@@ -40,7 +40,7 @@ public class ResourceUtilTest {
 		String name = "/nonexistent";
 
 		// When
-		ResourceUtil.getStream(name);
+		ResourceUtils.getStream(name);
 
 		// Then
 		// We should have an exception.
@@ -56,7 +56,7 @@ public class ResourceUtilTest {
 				+ "work and give orders. Instead, teach them to yearn for the vast and endless sea.\"";
 
 		// When
-		String actual = ResourceUtil.getString(name);
+		String actual = ResourceUtils.getString(name);
 
 		// Then
 		assertEquals(expected, actual);
@@ -67,11 +67,11 @@ public class ResourceUtilTest {
 
 		// Given
 		String name = "/holiday11-hp.png";
-		InputStream resource = ResourceUtil.getStream(name);
+		InputStream resource = ResourceUtils.getStream(name);
 		long expected = checksumCRC32(resource);
 
 		// When
-		File file = ResourceUtil.getFile(name);
+		File file = ResourceUtils.getFile(name);
 		long actual = FileUtils.checksumCRC32(file);
 
 		// Then
@@ -85,7 +85,7 @@ public class ResourceUtilTest {
 		String name = "/note.xml";
 
 		// When
-		Document document = ResourceUtil.getXml(name);
+		Document document = ResourceUtils.getXml(name);
 
 		// Then 
 		Element firstChild = document.getDocumentElement();
@@ -127,7 +127,7 @@ public class ResourceUtilTest {
 		String name = "/note_invalid.xml";
 
 		// When
-		ResourceUtil.getXml(name);
+		ResourceUtils.getXml(name);
 
 		// Then 
 		// We should have an exception
