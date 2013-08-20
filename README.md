@@ -35,7 +35,7 @@ To use `resource-utils` in your project:
 		<dependency>
 			<groupId>com.github.davidcarboni</groupId>
 			<artifactId>resource-utils</artifactId>
-			<version>1.0.7</version>
+			<version>1.1.0</version>
 		</dependency>
 
 		
