@@ -1,4 +1,4 @@
-package net.jirasystems.resourceutil;
+package com.github.davidcarboni;
 
 import java.io.File;
 import java.io.IOException;

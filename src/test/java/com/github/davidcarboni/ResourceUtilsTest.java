@@ -1,4 +1,4 @@
-package net.jirasystems.resourceutil;
+package com.github.davidcarboni;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -16,6 +16,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.github.davidcarboni.ResourceUtils;
 
 public class ResourceUtilsTest {
 
