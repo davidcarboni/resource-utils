@@ -9,11 +9,11 @@ Resource Utils provides straightforward access to Java resources in several form
 
 To get a resource as `Properties`:
 
-    Properties properties = ResourceUtil.getProperties("/com/github/davidcarboni/application.properties");
+    Properties properties = ResourceUtil.getProperties("/com/github/davidcarboni/app.properties");
 
 To get a resource as an XML `Document`:
 
-    Document document = ResourceUtil.getXml("/com/github/davidcarboni/application.xml");
+    Document document = ResourceUtil.getXml("/com/github/davidcarboni/app.xml");
 
 To get a resource as a `String`:
 
