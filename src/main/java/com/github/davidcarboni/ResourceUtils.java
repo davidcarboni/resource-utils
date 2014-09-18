@@ -3,6 +3,8 @@ package com.github.davidcarboni;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -45,7 +47,21 @@ public class ResourceUtils {
 	 * 
 	 * @param name
 	 *            The name of a resource.
-	 * @return A String containing the contents of the resource in UTF-8 encoding.
+	 * @return A {@link Reader} for the resource.
+	 * @throws IOException
+	 *             If an error occurs.
+	 */
+	public static Reader getReader(String name) throws IOException {
+		InputStream input = getStream(name);
+		return new InputStreamReader(input, "UTF-8");
+	}
+
+	/**
+	 * 
+	 * @param name
+	 *            The name of a resource.
+	 * @return A String containing the contents of the resource in UTF-8
+	 *         encoding.
 	 * @throws IOException
 	 *             If an error occurs.
 	 */
@@ -61,8 +77,8 @@ public class ResourceUtils {
 	}
 
 	/**
-	 * Extracts the named resource as a temporary file. The file is not set to be deleted on exit,
-	 * so you are free to move, rename, etc.
+	 * Extracts the named resource as a temporary file. The file is not set to
+	 * be deleted on exit, so you are free to move, rename, etc.
 	 * 
 	 * @param name
 	 *            The name of a resource.
@@ -87,9 +103,11 @@ public class ResourceUtils {
 	/**
 	 * @param name
 	 *            The name of a properties resource.
-	 * @return A {@link Properties} instance, populated with the content of the resource.
+	 * @return A {@link Properties} instance, populated with the content of the
+	 *         resource.
 	 * @throws IOException
-	 *             If an error occurs in locating the resource or reading the stream.
+	 *             If an error occurs in locating the resource or reading the
+	 *             stream.
 	 */
 	public static Properties getProperties(String name) throws IOException {
 		// The properties class handles null defaults:
@@ -100,12 +118,16 @@ public class ResourceUtils {
 	 * @param name
 	 *            The name of a properties resource.
 	 * @param defaults
-	 *            A set of default properties. This can be null as {@link Properties} handles this.
-	 * @return A {@link Properties} instance, populated with the content of the resource.
+	 *            A set of default properties. This can be null as
+	 *            {@link Properties} handles this.
+	 * @return A {@link Properties} instance, populated with the content of the
+	 *         resource.
 	 * @throws IOException
-	 *             If an error occurs in locating the resource or reading the stream.
+	 *             If an error occurs in locating the resource or reading the
+	 *             stream.
 	 */
-	public static Properties getProperties(String name, Properties defaults) throws IOException {
+	public static Properties getProperties(String name, Properties defaults)
+			throws IOException {
 		InputStream input = getStream(name);
 		try {
 			Properties properties = new Properties(defaults);
@@ -138,9 +160,12 @@ public class ResourceUtils {
 			input = getStream(name);
 
 			// Parse the stream:
-			// Adapted from: http://www.java-samples.com/showtutorial.php?tutorialid=152
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilderdocumentBuilder = documentBuilderFactory.newDocumentBuilder();
+			// Adapted from:
+			// http://www.java-samples.com/showtutorial.php?tutorialid=152
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder documentBuilderdocumentBuilder = documentBuilderFactory
+					.newDocumentBuilder();
 			result = documentBuilderdocumentBuilder.parse(input);
 
 		} catch (ParserConfigurationException e) {
