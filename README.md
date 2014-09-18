@@ -23,6 +23,10 @@ To extract a resource to a temp `File`:
 
     File temp = ResourceUtils.getFile("/com/github/davidcarboni/file.resource");
 
+To get a resource as a `Reader`:
+
+    Reader reader = ResourceUtils.getReader("/com/github/davidcarboni/character.resource");
+
 To get a resource as a good old `InputStream`:
 
     InputStream input = ResourceUtils.getStream("/com/github/davidcarboni/resource.data");
