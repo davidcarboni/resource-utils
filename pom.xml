@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.davidcarboni</groupId>
 	<artifactId>resource-utils</artifactId>
-	<version>1.1.2-SNAPSHOT</version>
+	<version>1.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Resource Utils</name>
 	<description>Convenience for dealing with Java resources as properties, files, text and input streams.</description>
@@ -139,24 +140,22 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.4.1</version>
+				<version>2.5</version>
 				<configuration>
-
-					<!-- Automated passphrase entry: -->
-
-					<!-- To pass your passphrase to the build automatically, so avoiding 
-						manual interaction, you'll need to put the passphrase into settings.xml. 
-						You don't really want that to be in plain text, so you'll want to follow: 
-						http://maven.apache.org/guides/mini/guide-encryption.html -->
-					<!-- <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments> -->
-
-					<!-- Manual passphrase entry: -->
-
-					<!-- This is the simplest secure solution, but requires you to type 
-						your key passphrase in manually when performing a release. No biggie unless 
-						you want your CI server to decide when to release for you. -->
 					<mavenExecutorId>forked-path</mavenExecutorId>
+				</configuration>
+			</plugin>
 
+			<!-- Deployment -->
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.2</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>sonatype-nexus-staging</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
 
