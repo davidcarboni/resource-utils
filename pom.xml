@@ -19,6 +19,11 @@
 		</license>
 	</licenses>
 
+	<organization>
+		<name>Carboni</name>
+		<url>https://github.com/carboni/</url>
+	</organization>
+
 	<!-- Required: source control information: -->
 	<scm>
 		<url>https://github.com/davidcarboni/resource-utils</url>
@@ -150,7 +155,7 @@
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.2</version>
+				<version>1.6.4</version>
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>sonatype-nexus-staging</serverId>
@@ -195,14 +200,13 @@
 
 	</profiles>
 
-	<!-- Required: developer information: -->
 	<developers>
 		<developer>
 			<id>david</id>
 			<name>David Carboni</name>
-			<email>david@carboni.co</email>
+			<email>david@carboni.io</email>
 			<organization>Carboni</organization>
-			<organizationUrl>https://github.com/davidcarboni</organizationUrl>
+			<organizationUrl>https://github.com/carboni</organizationUrl>
 			<url>https://github.com/davidcarboni</url>
 		</developer>
 	</developers>
