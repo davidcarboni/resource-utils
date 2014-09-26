@@ -24,9 +24,8 @@ import org.xml.sax.SAXException;
  */
 public class ResourceUtils {
 
-	/** The classloader to use for loading resources. */
-	public static ClassLoader classLoader = ResourceUtils.class
-			.getClassLoader();
+	/** The Class on which <code>getResourceAsStream(...)</code> will be called. */
+	public static Class<?> classLoaderClass = ResourceUtils.class;
 
 	/**
 	 * Get a resource as an {@link InputStream}.
@@ -40,7 +39,7 @@ public class ResourceUtils {
 	public static InputStream getStream(String name) throws IOException {
 
 		// Try a couple of strategies to get the resource:
-		InputStream stream = classLoader.getResourceAsStream(name);
+		InputStream stream = classLoaderClass.getResourceAsStream(name);
 		if (stream == null) {
 			throw new IOException("Unable to locate resource " + name);
 		}
