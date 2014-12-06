@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -105,6 +110,27 @@ public class ResourceUtils {
 	}
 
 	/**
+	 * Extracts the named resource as a temporary file. The file is not set to
+	 * be deleted on exit, so you are free to move, rename, etc.
+	 * 
+	 * @param name
+	 *            The name of a resource.
+	 * @return A temp file containing the contents of the resource.
+	 * @throws IOException
+	 *             If an error occurs.
+	 */
+	public static Path getPath(String name) throws IOException {
+		URL url = classLoaderClass.getResource(name);
+		try {
+			URI uri = url.toURI();
+			Path path = Paths.get(uri);
+			return path;
+		} catch (URISyntaxException e) {
+			throw new IOException("Error copying resource to file.", e);
+		}
+	}
+
+	/**
 	 * @param name
 	 *            The name of a properties resource.
 	 * @return A {@link Properties} instance, populated with the content of the
@@ -130,8 +156,7 @@ public class ResourceUtils {
 	 *             If an error occurs in locating the resource or reading the
 	 *             stream.
 	 */
-	public static Properties getProperties(String name, Properties defaults)
-			throws IOException {
+	public static Properties getProperties(String name, Properties defaults) throws IOException {
 		InputStream input = getStream(name);
 		try {
 			Properties properties = new Properties(defaults);
@@ -166,10 +191,8 @@ public class ResourceUtils {
 			// Parse the stream:
 			// Adapted from:
 			// http://www.java-samples.com/showtutorial.php?tutorialid=152
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder documentBuilderdocumentBuilder = documentBuilderFactory
-					.newDocumentBuilder();
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilderdocumentBuilder = documentBuilderFactory.newDocumentBuilder();
 			result = documentBuilderdocumentBuilder.parse(input);
 
 		} catch (ParserConfigurationException e) {
