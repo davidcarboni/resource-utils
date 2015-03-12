@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
@@ -125,54 +126,39 @@ public class ResourceUtils {
 	 * @return A {@link Path} to the named resource.
 	 * @throws IOException
 	 *             If an error occurs.
-	 * @see "How do I list the files inside a JAR file?" <a href=
-	 *      "http://stackoverflow.com/questions/1429172/how-do-i-list-the-files-inside-a-jar-file/1429275#1429275"
-	 *      >http://stackoverflow.com/questions/1429172/how-do-i-list-the-files-
-	 *      inside-a-jar-file/1429275#1429275</a>
 	 */
 	public static Path getPath(String name) throws IOException {
 
-		// Adapted from:
-		// http://stackoverflow.com/questions/1429172/how-do-i-list-the-files-inside-a-jar-file/1429275#1429275
-		CodeSource src = classLoaderClass.getProtectionDomain().getCodeSource();
-		if (src != null) {
+		// Get the resource if it exists:
+		URL url = classLoaderClass.getResource(name);
+		if (url == null) {
+			throw new IOException("Unable to identify a CodeSource.");
+		}
 
-			// Get a uri for the code source:
-			URI uri;
-			try {
-				uri = src.getLocation().toURI();
-			} catch (URISyntaxException e) {
-				throw new IOException("Error parsing URL as a URI: "
-						+ src.getLocation(), e);
-			}
+		// Turn it into a Path:
+		try {
+			URI uri = url.toURI();
 
-			// Now get a path
-			Path codeSource = Paths.get(uri);
-			Path result;
-			if (uri.getPath().toLowerCase().endsWith(".jar")) {
-				// Get or create the filesystem:
+			if (!uri.getScheme().equalsIgnoreCase("file")) {
+				// We're most likely running from a JAR:
 				FileSystem fileSystem;
-				uri = URI.create("jar:file:" + codeSource);
 				try {
 					fileSystem = FileSystems.getFileSystem(uri);
 				} catch (FileSystemNotFoundException e) {
+					// This should only happen on first access.
+					// The FileSystem should be available for subsequent calls.
 					fileSystem = FileSystems.newFileSystem(uri,
 							new HashMap<String, Object>());
 				}
-				result = fileSystem.getPath(name);
+				return fileSystem.getPath(name);
 			} else {
-				// Get a relative filesystem path.
-				// This makes them look similar to JAR paths:
-				String relative = name;
-				if (relative.startsWith("/")) {
-					relative = relative.substring(1);
-				}
-				result = codeSource.resolve(relative);
+				// We're runinng from files, or probably
+				// something we can access in a normal way:
+				return Paths.get(uri);
 			}
-			return result;
 
-		} else {
-			throw new IOException("Unable to identify a CodeSource.");
+		} catch (URISyntaxException e) {
+			throw new IOException("Error copying resource to file.", e);
 		}
 	}
 
